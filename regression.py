@@ -1,6 +1,9 @@
 import numpy as np
 from scipy.optimize import curve_fit
 import csv
+import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+import numpy as np
 
 
 def func(X, a, b, c):
@@ -87,3 +90,19 @@ print("Spiral")
 print(curve_fit(func, (num_of_robots, area), escaping_locust_spiral, p0))
 # area - (array([ 67.11021586, -24.22799225,   4.31389882]
 # circumference - (array([ 78.49708501, -24.22799228,   3.9048133 ])
+
+
+# *********************** Plot Area ***********************
+
+robots = np.arange(1, 100, 1)
+areas = [878, 988, 1311, 1896, 2261]
+
+B, D = np.meshgrid(robots, areas)
+nu = 52.21743823 - 14.94567112*np.log(B) + 0.57499854*np.log(D)
+
+fig = plt.figure()
+ax = Axes3D(fig)
+ax.plot_surface(B, D, nu)
+plt.xlabel('Number of robots')
+plt.ylabel('Polygon area')
+plt.show()
